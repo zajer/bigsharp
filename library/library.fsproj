@@ -12,7 +12,6 @@
   <ItemGroup>
     <Compile Include="Utils.fs" />
     <Compile Include="Matrix.fs" />
-    <Compile Include="Library.fs" />
   </ItemGroup>
 
 </Project>
