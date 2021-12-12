@@ -9,9 +9,9 @@ type MatrixTests () =
         let width1 = 4
         let height1 = 4
         let data1 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let mx1 = Matrix.createUnsafe width1 height1 data1
         Assert.IsTrue(mx1.isEqualTo mx1)
@@ -20,14 +20,14 @@ type MatrixTests () =
         let width1 = 4
         let height1 = 4
         let data1 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let data2 = [|
-            Set.ofList[0;2];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;2];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let width2 = 4
         let height2 = 4
@@ -39,14 +39,14 @@ type MatrixTests () =
         let width1 = 4
         let height1 = 4
         let data1 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let data2 = [|
-            Set.ofList[0;3];
-            Set.ofList[1;2];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1;2];
+            Set.ofList [0;1;2;3]
         |]
         let width2 = 4
         let height2 = 4
@@ -58,14 +58,14 @@ type MatrixTests () =
         let width1 = 4
         let height1 = 4
         let data1 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let data2 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;2;3]
         |]
         let width2 = 4
         let height2 = 4
@@ -77,14 +77,14 @@ type MatrixTests () =
         let width1 = 4
         let height1 = 4
         let data1 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let data2 = [|
-            Set.ofList[0;3];
-            Set.ofList[1];
-            Set.ofList[0;1;2;3]
+            Set.ofList [0;3];
+            Set.ofList [1];
+            Set.ofList [0;1;2;3]
         |]
         let width2 = 3
         let height2 = 3
@@ -96,11 +96,11 @@ type MatrixTests () =
         let width = 3
         let height = 5
         let data = [|
-            Set.ofList[0;2];
-            Set.ofList[1];
-            Set.ofList[0;1;2];
-            Set.ofList[2];
-            Set.ofList[0]
+            Set.ofList [0;2];
+            Set.ofList [1];
+            Set.ofList [0;1;2];
+            Set.ofList [2];
+            Set.ofList [0]
         |]
         let mx1 = Matrix.createUnsafe width height data
         Assert.IsTrue(mx1.isEqualTo mx1)
