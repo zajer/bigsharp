@@ -69,6 +69,8 @@ module Matrix =
                 1
             else
                 0
+        member this.Item with get(row,col) =
+            this.getElem row col
         override this.ToString () = 
             let sb = System.Text.StringBuilder ()
             for i in 0 .. (this.height-1) do 

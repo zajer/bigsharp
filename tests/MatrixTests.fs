@@ -273,3 +273,22 @@ type MatrixTests () =
         let expectedResultMx = Matrix.create expectedResultMxHeight expectedResultMxWidth expectResultMxData
         let actualResultMx = inputMx.shrink rowsToDelete colsToDelete
         Assert.AreEqual(expectedResultMx,actualResultMx)
+    [<TestMethod>]
+    member this.MatrixElementAccessOperatorTest () =
+        let mxData =
+            [|
+                [|1|];
+                [|0;1|];
+                [|0;0;1|]
+            |]
+        let mxWidth = 3
+        let mxHeight = 3
+        let mx = Matrix.create mxHeight mxWidth mxData
+        let expectedResult1 = 1
+        Assert.AreEqual(expectedResult1,mx.[0,0])
+        Assert.AreEqual(expectedResult1,mx.[1,1])
+        Assert.AreEqual(expectedResult1,mx.[2,2])
+        let expectedResult2 = 0
+        Assert.AreEqual(expectedResult2,mx.[0,2])
+        Assert.AreEqual(expectedResult2,mx.[1,0])
+        Assert.AreEqual(expectedResult2,mx.[2,1])
