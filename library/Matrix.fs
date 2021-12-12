@@ -40,6 +40,23 @@ module Matrix =
         member this.extend another =
             let resultStructure = Array.append this.structure (ShiftValues this.width another.structure)
             {structure=resultStructure;width=this.width+another.width;height=this.height+another.height}
+        member this.shrink rows cols =
+            let newStructure = 
+                Array.init 
+                    (this.height-(Set.count rows) ) 
+                    (fun i -> 
+                        let origIdx = Utils.nthNaturalNumberOutsideProvidedSet i rows
+                        this.structure.[origIdx]
+                    )
+                |> Array.Parallel.map
+                    (fun rowSet -> 
+                        Set.difference rowSet cols |>
+                        Set.map 
+                            (fun v -> 
+                                v - Utils.numberOfSmallerElements v cols
+                            )
+                    )
+            {structure=newStructure;width=this.width-(Set.count cols);height=this.height-(Set.count rows)}
         override this.Equals another =
             match another with
             | :? matrix as mx -> this.isEqualTo mx
@@ -47,6 +64,25 @@ module Matrix =
         override this.GetHashCode () =
             let structHash = this.structure.GetHashCode()
             (structHash+17*this.width+7*this.height)
+        member this.getElem row col =
+            if Set.contains col this.structure.[row] then
+                1
+            else
+                0
+        override this.ToString () = 
+            let sb = System.Text.StringBuilder ()
+            for i in 0 .. (this.height-1) do 
+                (
+                for j in 0 .. (this.width-1) do
+                    (
+                    let elem = this.getElem i j
+                    sb.Append $"{elem}" |> ignore
+                    sb.Append " " |> ignore
+                    )
+                if i < (this.height-1) then
+                    sb.Append System.Environment.NewLine |> ignore
+                )
+            sb.ToString ()
     let create numOfRows numOfCols dataAsAoA =
             if Array.length dataAsAoA > numOfRows then
                 raise (invalidArg "data" "There are more rows in provided data than the heigh of the matrix")

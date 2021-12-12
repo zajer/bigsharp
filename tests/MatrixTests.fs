@@ -3,7 +3,7 @@ namespace Bigsharp.Core
 open Microsoft.VisualStudio.TestTools.UnitTesting
 
 [<TestClass>]
-type MatrixTests () =  
+type MatrixTests () = 
     [<TestMethod>]
     member this.EqualityTest1 () = 
         let width1 = 4
@@ -204,5 +204,72 @@ type MatrixTests () =
         let expectedMx = Matrix.create resHeight resWidth mxResData
         let resultMx = mx1.extend mx2
         Assert.AreEqual(expectedMx,resultMx)
-
-        
+    [<TestMethod>]
+    member this.MatrixAsStringTest () =
+        let mxData = 
+            [|
+                [|0;0;1|];
+                [|0;1|];
+                [|1|];
+                [|0;0;0;1|];
+                [|0;0;0;0;1|]
+            |]
+        let mxWidth = 5
+        let mxHeight = 5
+        let mx = Matrix.create mxHeight mxWidth mxData
+        printfn "actual:\n%s" (mx.ToString ())
+        let expectedString ="0 0 1 0 0 \n0 1 0 0 0 \n1 0 0 0 0 \n0 0 0 1 0 \n0 0 0 0 1 "
+        printfn "expected:\n%s" expectedString
+        Assert.AreEqual(expectedString,mx.ToString())
+    [<TestMethod>]
+    member this.MatrixShrinkingTest1 () =
+        let mxData = 
+            [|
+                [|0;0;1|];
+                [|0;1|];
+                [|1|];
+                [|0;0;0;1|];
+                [|0;0;0;0;1|]
+            |]
+        let mxWidth = 5
+        let mxHeight = 5
+        let rowsToDelete = Set.ofArray [|1;3|]
+        let colsToDelete = Set.ofArray [|0|]
+        let expectResultMxData =
+            [|
+                [|0;1|];
+                [||];
+                [|0;0;0;1|]
+            |]
+        let expectedResultMxWidth = 4
+        let expectedResultMxHeight = 3
+        let inputMx = Matrix.create mxHeight mxWidth mxData
+        let expectedResultMx = Matrix.create expectedResultMxHeight expectedResultMxWidth expectResultMxData
+        let actualResultMx = inputMx.shrink rowsToDelete colsToDelete
+        Assert.AreEqual(expectedResultMx,actualResultMx)
+    [<TestMethod>]
+    member this.MatrixShrinkingTest2 () =
+        let mxData = 
+            [|
+                [|0;0;1|];
+                [|0;1|];
+                [|1|];
+                [|0;0;0;1|];
+                [|0;0;0;0;1|]
+            |]
+        let mxWidth = 5
+        let mxHeight = 5
+        let rowsToDelete = Set.ofArray [|1;2|]
+        let colsToDelete = Set.ofArray [|0;1|]
+        let expectResultMxData =
+            [|
+                [|1|];
+                [|0;1|];
+                [|0;0;1|]
+            |]
+        let expectedResultMxWidth = 3
+        let expectedResultMxHeight = 3
+        let inputMx = Matrix.create mxHeight mxWidth mxData
+        let expectedResultMx = Matrix.create expectedResultMxHeight expectedResultMxWidth expectResultMxData
+        let actualResultMx = inputMx.shrink rowsToDelete colsToDelete
+        Assert.AreEqual(expectedResultMx,actualResultMx)
