@@ -57,6 +57,41 @@ module Matrix =
                             )
                     )
             {structure=newStructure;width=this.width-(Set.count cols);height=this.height-(Set.count rows)}
+        member this.nonzeroRowsInCol col =
+            Array.Parallel.mapi
+                (fun rowId row ->
+                    match Set.contains col row with
+                    | true -> Some rowId
+                    | false -> None
+                )
+                this.structure
+            |> Array.choose id |> Set.ofArray
+        member this.nonzeroColsInRow row =
+            this.structure.[row]
+        member this.findZeroRows () =
+            Array.Parallel.mapi
+                (fun rowId row ->
+                    match Set.isEmpty row with
+                    | true -> Some rowId
+                    | false -> None
+                )
+                this.structure
+            |> Array.choose id |> Set.ofArray
+        member this.findZeroCols () =
+            let uncertainCols = Array.init this.width id |> Set.ofArray
+            Array.fold (fun emptyCols row -> Set.difference emptyCols row) uncertainCols this.structure
+        member this.copyContentOfRow fromFrom toRow =
+            let fromRowSet = this.structure.[fromFrom]
+            let toRowSet = this.structure.[toRow]
+            let newStructure = 
+                Array.init 
+                    this.height 
+                    (fun rowId -> 
+                        match rowId = toRow with
+                        | false -> this.structure.[rowId]
+                        | true -> Set.union fromRowSet toRowSet
+                    )
+            {structure=newStructure;height=this.height;width=this.width}
         override this.Equals another =
             match another with
             | :? matrix as mx -> this.isEqualTo mx
