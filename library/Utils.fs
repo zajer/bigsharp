@@ -13,7 +13,7 @@ module Utils =
         | _ -> 
             match Set.contains start unavialable with
             | false -> nthAvailableNumber (n-1) (start+1) unavialable
-            | true -> nthAvailableNumber n (start+1) (Set.remove start unavialable)
+            | true -> nthAvailableNumber n (start+1) unavialable //(Set.remove start unavialable) it should be faster to just search through a bigger set than to each time remove an element from a set
     let nthNaturalNumberOutsideProvidedSet n set =
         let nose = numberOfSmallerElements n set
         nthAvailableNumber (nose+1) n set
